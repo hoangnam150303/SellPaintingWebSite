@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using SellPainting.Models;
 using System.Diagnostics;
 
-namespace SellPainting.Controllers
+namespace SellPainting.Areas.Customers.Controllers
 {
     public class HomeController : Controller
     {
@@ -28,9 +28,7 @@ namespace SellPainting.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        public IActionResult CreateType()
-        {
-            return View();
-        }
+
+
     }
 }
