@@ -4,7 +4,7 @@ using SellPainting.Repository.IRepository;
 
 namespace SellPainting.Repository
 {
-    public class TypesRepository:Repository<TypesOfPainting>,ITypeOfPainting
+    public class TypesRepository:Repository<TypesOfPainting>,ITypeOfPaintingRepository
     {
         private readonly ApplicationDbContext _db;
         public TypesRepository(ApplicationDbContext db) : base(db)

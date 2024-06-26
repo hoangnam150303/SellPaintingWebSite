@@ -2,7 +2,7 @@
 
 namespace SellPainting.Repository.IRepository
 {
-    public interface ITypeOfPainting:IRepository<TypesOfPainting>
+    public interface ITypeOfPaintingRepository:IRepository<TypesOfPainting>
     {
         void Update(TypesOfPainting entity);
     }

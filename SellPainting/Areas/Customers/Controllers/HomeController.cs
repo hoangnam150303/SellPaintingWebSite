@@ -4,6 +4,8 @@ using System.Diagnostics;
 
 namespace SellPainting.Areas.Customers.Controllers
 {
+    [Area("Customers")]
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

@@ -1,5 +1,8 @@
 ﻿@page
+@using SellPainting.Models
 @model RegisterModel
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @{
     ViewData["Title"] = "Register";
 }

@@ -3,6 +3,10 @@ using SellPainting.Data;
 using Microsoft.AspNetCore.Identity;
 using SellPainting.Repository.IRepository;
 using SellPainting.Repository;
+using JobSeeking.Ultility;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using SellPainting.Models;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,9 +14,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer
 (builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddRazorPages();
 builder.Services.ConfigureApplicationCookie(option =>
 {
@@ -33,6 +37,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();

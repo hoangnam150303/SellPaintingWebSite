@@ -2,7 +2,7 @@
 {
     public interface IUnitOfWork
     {
-        ITypeOfPainting TypesRepository { get; }
+        ITypeOfPaintingRepository TypesRepository { get; }
         void Save();
     }
 }

@@ -1,5 +1,7 @@
 ﻿@page
+@using SellPainting.Models
 @model LogoutModel
+@inject UserManager<ApplicationUser> UserManager
 @{
     ViewData["Title"] = "Log out";
 }

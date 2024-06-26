@@ -7,7 +7,7 @@ namespace SellPainting.Repository
     public class UnitOfWork:IUnitOfWork
     {
         public ApplicationDbContext _db;
-        public ITypeOfPainting TypesRepository { get; private set; }
+        public ITypeOfPaintingRepository TypesRepository { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
