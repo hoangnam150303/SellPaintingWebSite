@@ -3,11 +3,9 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @model LoginModel
 
-@{
-    ViewData["Title"] = "Log in";
-}
+
 <link href="~/css/login&register.css" rel="stylesheet" />
-<h1>@ViewData["Title"]</h1>
+
 <div class="wrapper">
    <form method="post">
        <h1>Login</h1>
@@ -29,8 +27,10 @@
         <button type="submit" class="btn">Login</button>
         
         <div class="register-link">
-            <p>Don't have any account</p>
-            <a asp-page="./Register">Register</a>
+            <p>Don't have an account? 
+                <a asp-page="./Register">Register</a>
+            </p>
+            
         </div>
    </form>
 </div>

@@ -7,13 +7,11 @@ namespace SellPainting.Repository
     public class UnitOfWork:IUnitOfWork
     {
         public ApplicationDbContext _db;
-        public ITypeOfPaintingRepository TypesRepository { get; private set; }
+        public IApplicationUserRepository ApplicationUserRepository {  get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
-            _db = db;
-            TypesRepository = new TypesRepository(db);
-
+            ApplicationUserRepository =  new ApplicationUserRepository(db);
         }
         public void Save()
         {
