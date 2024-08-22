@@ -4,7 +4,7 @@ using SellPainting.Repository.IRepository;
 
 namespace SellPainting.Repository
 {
-    public class ApplicationUserRepository:Repository<ApplicationUser>,IApplicationUserRepository
+    public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicationUserRepository
     {
         private readonly ApplicationDbContext _db;
         public ApplicationUserRepository(ApplicationDbContext db) : base(db)

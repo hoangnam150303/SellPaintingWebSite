@@ -1,11 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using SellPainting.Data;
 using Microsoft.AspNetCore.Identity;
-using SellPainting.Repository.IRepository;
-using SellPainting.Repository;
+
 using JobSeeking.Ultility;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using SellPainting.Models;
+using SellPainting.Repository.IRepository;
+using SellPainting.Repository;
 
 
 var builder = WebApplication.CreateBuilder(args);

@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using SellPainting.Models;
 
 namespace SellPainting.Areas.Identity.Pages.Account
@@ -54,6 +55,7 @@ namespace SellPainting.Areas.Identity.Pages.Account
         /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
+        public List<string> AllRoles { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -100,19 +102,20 @@ namespace SellPainting.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-            public string Name {  get; set; }
+            public string FirstName {  get; set; }
+            public string FamilyName {  get; set; }
+            public string Address {  get; set; }
+            public string Role {  get; set; }
         }
 
 
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
-            if (!_roleManager.RoleExistsAsync("Admin").GetAwaiter().GetResult())
-            {
-                _roleManager.CreateAsync(new IdentityRole("Admin")).GetAwaiter().GetResult();
-
-            }
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+            // Ensure AllRoles is initialized
+            AllRoles = await _roleManager.Roles.Select(r => r.Name).ToListAsync();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -122,16 +125,20 @@ namespace SellPainting.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-                _userManager.AddToRoleAsync(user, "Admin").GetAwaiter().GetResult();
+              
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                user.Name = Input.Name;
+                user.FirstName = Input.FirstName;
+                user.FamilyName = Input.FamilyName;
+                user.Address = Input.Address;
+                user.Role = Input.Role;
+              
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
+                    await _userManager.AddToRoleAsync(user, Input.Role);
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -141,8 +148,7 @@ namespace SellPainting.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
@@ -150,8 +156,7 @@ namespace SellPainting.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        return RedirectToPage("./Login");
                     }
                 }
                 foreach (var error in result.Errors)

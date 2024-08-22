@@ -1,4 +1,4 @@
-﻿using SellPainting.Migrations;
+﻿
 using SellPainting.Models;
 
 namespace SellPainting.Repository.IRepository

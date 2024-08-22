@@ -9,9 +9,14 @@ namespace SellPainting.Repository
         public ApplicationDbContext _db;
         public IApplicationUserRepository ApplicationUserRepository {  get; private set; }
 
+        public IPaintingRepository PaintingRepository { get; private set;}
+        public ICategoryRepository CategoryRepository { get; private set; }
+
         public UnitOfWork(ApplicationDbContext db)
         {
             ApplicationUserRepository =  new ApplicationUserRepository(db);
+            PaintingRepository = new PaintingRepository(db);
+            CategoryRepository = new CategoryRepository(db);
         }
         public void Save()
         {

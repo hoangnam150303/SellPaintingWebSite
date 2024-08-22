@@ -1,0 +1,51 @@
+﻿@using SellPainting.Models.ViewModels
+@model SellPaintingVM
+<link href="~/css/formcrud.css" rel="stylesheet" />
+<div class="container">
+    <h1>Create painting</h1>
+    <form method="post" enctype="multipart/form-data">
+        <div class="input-field">
+            <label asp-for="Painting.Name"></label>
+            <input asp-for="Painting.Name" placeholder="Name of painting"/>
+            <span asp-validation-for="Painting.Name"></span>
+        </div>
+
+        <div class="input-field">
+        <label asp-for="Painting.NickName"></label>
+        <input asp-for="Painting.NickName" placeholder="Nick name of artist" />
+        <span asp-validation-for="Painting.NickName"></span>
+        </div>
+
+        <div class="input-field">
+            <label asp-for="Painting.Description">Description</label>
+            <input asp-for="Painting.Description" placeholder="Description of painting" />
+            <span asp-validation-for="Painting.Description"></span>
+        </div>
+
+        <div class="input-field">
+            <label asp-for="Painting.Price">Price</label>
+            <input asp-for="Painting.Price" placeholder="Price of painting" />
+            <span asp-validation-for="Painting.Price"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Painting.Category" class="col-sm-4 col-form-label">Category</label>
+            <select asp-for="Painting.Category" class="form-select" asp-items="@Model.Categories" multiple></select>
+            <span asp-validation-for="Painting.Category"></span>
+        </div>
+        <div class="choose-picture">
+            <label asp-for="Painting.PictureUrl"></label>
+            <input type="file" name="file" class="form-control" />
+            <span asp-validation-for="Painting.PictureUrl"></span>
+        </div>
+
+        <button type="submit" class="button">
+           Submit
+            <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
+                <path clip-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z" fill-rule="evenodd"></path>
+            </svg>
+        </button>
+
+        <a asp-action="Index" asp-controller="CRUDPainting" asp-area="Artists">Back</a>
+    </form>
+   
+</div>

@@ -1,0 +1,9 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model List<Painting>
+<partial name="_Notification" />
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+    var currentUser = SignInManager.UserManager.GetUserAsync(User);
+}
+
